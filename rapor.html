@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Not Defteri CLI — Proje Raporu</title>
+  <style>
+    :root {
+      --pink:    #F48FB1;
+      --light:   #FCE4EC;
+      --purple:  #CE93D8;
+      --red:     #EF9A9A;
+      --green:   #A5D6A7;
+      --cyan:    #80DEEA;
+      --dark:    #3E2723;
+      --gray:    #757575;
+      --code-bg: #FFF0F5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #FFF8FB;
+      color: var(--dark);
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 32px;
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      border-radius: 16px;
+      padding: 36px 40px;
+      color: white;
+      margin-bottom: 40px;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; }
+    header p  { opacity: .9; margin-top: 8px; }
+    header .meta { font-size: .85rem; opacity: .75; margin-top: 16px; }
+
+    h2 {
+      font-size: 1.2rem;
+      color: var(--pink);
+      border-left: 4px solid var(--pink);
+      padding-left: 12px;
+      margin: 36px 0 14px;
+    }
+    h3 { font-size: 1rem; color: var(--purple); margin: 20px 0 8px; }
+
+    p  { margin-bottom: 10px; }
+    ul { padding-left: 20px; margin-bottom: 10px; }
+    li { margin-bottom: 5px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid #F8BBD0;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: .88em;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid #F8BBD0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      overflow-x: auto;
+      margin: 10px 0 16px;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: .88em;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #F8BBD0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card h3 { margin-top: 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+      font-size: .92rem;
+    }
+    th {
+      background: var(--light);
+      color: var(--dark);
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--pink);
+    }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #FCDDE8;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    .badge-pink   { background: var(--light); color: #C2185B; }
+    .badge-purple { background: #F3E5F5;      color: #7B1FA2; }
+    .badge-green  { background: #E8F5E9;      color: #2E7D32; }
+    .badge-cyan   { background: #E0F7FA;      color: #00838F; }
+
+    .commit-list { list-style: none; padding: 0; }
+    .commit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #F8BBD0;
+    }
+    .commit-list li:last-child { border: none; }
+    .commit-num {
+      background: var(--pink);
+      color: white;
+      border-radius: 50%;
+      min-width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .learn-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .learn-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 2px solid var(--light);
+      font-size: .82rem;
+      color: var(--gray);
+      text-align: center;
+    }
+
+    @media print {
+      body { padding: 20px; }
+      header { break-inside: avoid; }
+      .card  { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Not Defteri CLI — Proje Raporu</h1>
+  <p>TypeScript + Vitest ile geliştirilmiş komut satırı not defteri uygulaması</p>
+  <div class="meta">
+    Geliştirici: Zeynep Su Sosun &nbsp;·&nbsp; Tarih: 15 Temmuz 2026 &nbsp;·&nbsp;
+    Proje: swe101-00-baslangic
+  </div>
+</header>
+
+<!-- ÖZET -->
+<h2>Uygulama Özeti</h2>
+<div class="card">
+  <p>
+    Kullanıcıların komut satırından not ekleyebildiği, listeleyebildiği ve
+    tamamlandı işaretleyebildiği küçük bir CLI uygulaması. Notlar
+    <code>notes.json</code> dosyasında kalıcı olarak saklanır;
+    uygulama kapatılsa bile notlar kaybolmaz.
+  </p>
+  <p>
+    Arayüz pastel pembe renk temasıyla (<strong>chalk</strong> kütüphanesi)
+    renklendirilmiştir: tamamlanmış notlar üstü çizili mor, yüksek öncelikli
+    notlar kırmızı, düşük öncelikli notlar yeşil görünür.
+  </p>
+</div>
+
+<!-- KOMUTLAR -->
+<h2>CLI Kullanımı</h2>
+<pre>npm run dev -- ekle "Alışveriş yap"
+npm run dev -- ekle "Makaleyi bitir" --oncelik yüksek
+npm run dev -- ekle "Müzik listesi"  --oncelik düşük
+npm run dev -- listele
+npm run dev -- tamamla 1</pre>
+
+<p><strong>Örnek listele çıktısı:</strong></p>
+<pre>╔══════════════════════════════╗
+║        Not Defteri 📒        ║
+╚══════════════════════════════╝
+[✓] #1 ● orta    Alışveriş yap
+[ ] #2 ● yüksek  Makaleyi bitir
+[ ] #3 ● düşük   Müzik listesi</pre>
+
+<!-- DOSYA YAPISI -->
+<h2>Dosya Yapısı</h2>
+<table>
+  <thead>
+    <tr><th>Dosya</th><th>Rol</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>src/storage.ts</code></td><td>JSON okuma / yazma + <code>Note</code> tip tanımı ve doğrulaması</td></tr>
+    <tr><td><code>src/notes.ts</code></td><td>İş mantığı: <code>addNote</code>, <code>listNotes</code>, <code>markDone</code></td></tr>
+    <tr><td><code>src/display.ts</code></td><td>Chalk ile pastel pembe terminal çıktısı</td></tr>
+    <tr><td><code>src/index.ts</code></td><td>CLI giriş noktası — komutları yönlendirir</td></tr>
+    <tr><td><code>src/notes.test.ts</code></td><td>3 unit test (addNote, listNotes, markDone)</td></tr>
+    <tr><td><code>src/index.test.ts</code></td><td>3 re-export entegrasyon testi</td></tr>
+    <tr><td><code>notes.json</code></td><td>Çalışma zamanında oluşur; kalıcı not verisi</td></tr>
+  </tbody>
+</table>
+
+<!-- VERİ MODELİ -->
+<h2>Veri Modeli</h2>
+<pre>type Priority = 'yüksek' | 'orta' | 'düşük'
+
+interface Note {
+  id:        number    // otomatik artan
+  text:      string    // not içeriği
+  done:      boolean   // tamamlanma durumu
+  priority:  Priority  // öncelik seviyesi
+  createdAt: string    // ISO 8601 tarihi
+}</pre>
+
+<!-- MİMARİ KARARLAR -->
+<h2>Mimari Kararlar</h2>
+
+<div class="card">
+  <h3>Neden JSON dosyası?</h3>
+  <p>
+    Veritabanı kurulumu gerektirmiyor, bağımlılık yok, dosya içeriği
+    doğrudan okunabilir. Küçük ölçekli CLI araçları için yeterli.
+  </p>
+</div>
+
+<div class="card">
+  <h3>Neden Dependency Injection?</h3>
+  <p>
+    <code>addNote(text, priority, load, save)</code> şeklinde
+    <code>load</code> ve <code>save</code> fonksiyonları parametre
+    olarak alınır. Testlerde gerçek <code>notes.json</code>'a dokunmadan
+    in-memory kopya kullanılabilir — test izolasyonu sağlanmış olur.
+  </p>
+</div>
+
+<div class="card">
+  <h3>Neden harici argüman-parser yok?</h3>
+  <p>
+    <code>process.argv</code> ile üç komut için yeterli. Komut sayısı
+    artarsa <code>yargs</code> veya <code>commander</code> eklenebilir.
+  </p>
+</div>
+
+<!-- TESTLER -->
+<h2>Unit Testler</h2>
+<table>
+  <thead>
+    <tr><th>#</th><th>Test adı</th><th>Kapsadığı davranış</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>addNote yeni notu doğru alanlarla oluşturur</td>
+      <td>id, text, done:false, priority, createdAt kontrolü</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>listNotes boş/dolu depo senaryosu</td>
+      <td>Boşta [] döner, eklemeden sonra hepsini listeler</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>markDone tamamlar / hata fırlatır</td>
+      <td>Var olan id done:true; olmayan id Error</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- COMMIT GEÇMİŞİ -->
+<h2>Commit Geçmişi</h2>
+<ul class="commit-list">
+  <li><span class="commit-num">1</span><span>storage modülünü ekle: JSON okuma/yazma</span></li>
+  <li><span class="commit-num">2</span><span>unit testleri ekle (kırmızı)</span></li>
+  <li><span class="commit-num">3</span><span>addNote, listNotes, markDone fonksiyonlarını yaz</span></li>
+  <li><span class="commit-num">4</span><span>CLI komutlarını bağla: ekle, listele, tamamla</span></li>
+  <li><span class="commit-num">5</span><span>pastel pembe tema uygula (chalk)</span></li>
+  <li><span class="commit-num">6</span><span>README'yi güncelle: kurulum, kullanım örnekleri, ne öğrendim</span></li>
+  <li><span class="commit-num">7</span><span>rapor.html oluştur</span></li>
+</ul>
+
+<!-- NE ÖĞRENDİM -->
+<h2>Ne Öğrendim</h2>
+
+<div class="learn-item">
+  <span class="learn-icon">📁</span>
+  <div>
+    <strong>JSON kalıcı depolama:</strong>
+    <code>fs.readFileSync</code> / <code>writeFileSync</code> ile dosyadan okuma/yazma;
+    <code>existsSync</code> ile ilk çalıştırmada dosya yokken güvenli başlangıç.
+  </div>
+</div>
+
+<div class="learn-item">
+  <span class="learn-icon">🔒</span>
+  <div>
+    <strong>TypeScript strict modu:</strong>
+    Dış verinin (<code>JSON.parse</code>) <code>unknown</code> tipinde geldiğini
+    ve tip guard fonksiyonuyla doğrulanması gerektiğini öğrendim.
+    <code>any</code> kullanmadan güvenli kod yazmak mümkün.
+  </div>
+</div>
+
+<div class="learn-item">
+  <span class="learn-icon">🔴</span>
+  <div>
+    <strong>Test-first (TDD) döngüsü:</strong>
+    Önce başarısız testi yazmak, ardından sadece o testi geçirecek kadar kod
+    yazmak — fazladan soyutlamadan kaçınmayı kolaylaştırıyor.
+  </div>
+</div>
+
+<div class="learn-item">
+  <span class="learn-icon">🧪</span>
+  <div>
+    <strong>Dependency injection ile test izolasyonu:</strong>
+    <code>loadNotes</code> / <code>saveNotes</code> fonksiyonlarını parametre
+    olarak geçirerek testlerde gerçek dosyaya dokunmadan in-memory kopya kullandım.
+  </div>
+</div>
+
+<div class="learn-item">
+  <span class="learn-icon">🎨</span>
+  <div>
+    <strong>chalk ile terminal renklendirme:</strong>
+    Hex renk kodlarıyla pastel tema oluşturma,
+    <code>strikethrough</code> ile tamamlanmış not görünümü.
+  </div>
+</div>
+
+<div class="learn-item">
+  <span class="learn-icon">⌨️</span>
+  <div>
+    <strong>CLI argüman ayrıştırma:</strong>
+    <code>process.argv</code> ile harici kütüphane olmadan komut ve flag okuma.
+  </div>
+</div>
+
+<div class="learn-item">
+  <span class="learn-icon">📝</span>
+  <div>
+    <strong>Anlamlı commit disiplini:</strong>
+    Her özelliği ayrı commit'e bölmek, <code>git log</code>'u gelecekte
+    okunabilir kılıyor ve her adımın ne yaptığını belgeliyor.
+  </div>
+</div>
+
+<footer>
+  <p>Bu raporu PDF olarak kaydetmek için tarayıcıda <strong>Dosya → Yazdır → PDF olarak kaydet</strong> seçeneğini kullan.</p>
+  <p style="margin-top:6px">swe101-00-baslangic · Zeynep Su Sosun · 2026</p>
+</footer>
+
+</body>
+</html>
