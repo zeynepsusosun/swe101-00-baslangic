@@ -19,7 +19,7 @@ function priorityLabel(p: Note['priority']): string {
 
 export function printHeader(): void {
   console.log(c.pink('╔══════════════════════════════╗'))
-  console.log(c.pink('║        Not Defteri 📒        ║'))
+  console.log(c.pink('║        zeynepin notları 📒   ║'))
   console.log(c.pink('╚══════════════════════════════╝'))
 }
 
